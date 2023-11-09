@@ -1,12 +1,19 @@
-let inputElem=document.querySelector("#addTodo")
+let inputElem=document.getElementsByTagName("input")
 let addBtnElem=document.querySelector(".btn")
 let filterElem=document.getElementById("filter")
 let sortElem=document.getElementById("sort")
+let containerElem=getElementById("container")
 
 const addTodoHandler=()=>{
-    console.log(inputElem.Value)
+    console.log("okey")
+    if(inputElem[0].value){
+        alert("noterroe")
 
-     (inputElem.Value) ? console.log("okey") : console.log("not")
+        // insertAdjacentHTML("afterend", text)
+
+    }else{
+        alert("error")
+    }
     
 }
 
