@@ -1,6 +1,7 @@
 let inputElem = document.getElementsByTagName("input")
 let addBtnElem = document.querySelector(".btn")
 let containerElem = document.querySelector("#container")
+let filterElem = document.querySelector("#filter")
 let allTodoes = []
 
 
@@ -14,13 +15,14 @@ const addTodoTimeHandler = () => {
 
 
 const checkedHandler = (event) => {
-    console.log(event.target)
-
+    let mainTodo = allTodoes.find((todo) => todo.id === event.target.id)
+    mainTodo.checked = !mainTodo.checked
 }
 
 const addTodoHandler = () => {
     if (inputElem[0].value) {
         let newTodo = {
+            id: crypto.randomUUID(),
             title: inputElem[0].value,
             checked: false,
             timeOfAddTodo: addTodoTimeHandler()
@@ -28,7 +30,6 @@ const addTodoHandler = () => {
         allTodoes.push(newTodo)
         createdTodoHandler(...allTodoes)
         inputElem[0].value = ""
-        console.log(allTodoes)
     }
     else { prompt("add modal") }
 
@@ -43,7 +44,7 @@ const createdTodoHandler = (...todoes) => {
           class="list-group-item d-flex align-items-center ps-0 pe-3 py-1 rounded-0 border-0 bg-transparent">
             <div class="form-check">
               <input class="form-check-input me-0" type="checkbox" value="" onChange=checkedHandler(event)
-             ${(todo.checked) ? "checked" : ""} id="flexCheckChecked1" aria-label="..."  />
+             ${(todo.checked) ? "checked" : ""} id=${todo.id} aria-label="..."  />
             </div>
          </li>
          <li
@@ -71,6 +72,26 @@ const createdTodoHandler = (...todoes) => {
 
 }
 
+const filterTodoHandler = (filter) => {
+    let newtodoes = [...allTodoes]
+    if (filter === "All") {
+        createdTodoHandler(...allTodoes)
+    } else if (filter === "Completed") {
+        let copytodoes = newtodoes.filter(todo => todo.checked === true)
+        createdTodoHandler(...copytodoes)
+    } else if (filter === "Active") {
+        let copytodoes = newtodoes.filter(todo => todo.checked === false)
+        createdTodoHandler(...copytodoes)
+    }
+}
+
 
 addBtnElem.addEventListener("click", addTodoHandler)
+inputElem[0].addEventListener("keydown", (event) => {
+    event.keyCode === 13 && addTodoHandler()
+})
+filterElem.addEventListener("change", (event) => {
+    filterTodoHandler(event.target.value)
+})
+
 
