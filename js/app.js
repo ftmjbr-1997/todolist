@@ -12,7 +12,7 @@ const getAllTodoes = () => {
     if (localStorageTodos) {
         createdTodoHandler(localStorageTodos)
     } else {
-        return null
+        localStorageTodos = []
     }
 
 }
