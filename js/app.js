@@ -117,4 +117,10 @@ filterElem.addEventListener("change", (event) => {
     filterTodoHandler(event.target.value)
 })
 
+cleartodoes.addEventListener("click", () => {
+    localStorageTodos = []
+    createdTodoHandler(localStorageTodos)
+    localStorage.removeItem('todos')
+})
+
 
